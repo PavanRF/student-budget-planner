@@ -64,16 +64,16 @@ export function monthStart(key: string) {
   return `${key}-01`;
 }
 export function shiftMonth(key: string, delta: number): string {
-  const [y, m] = key.split("-").map(Number);
+  const [y = 0, m = 1] = key.split("-").map(Number);
   const d = new Date(y, m - 1 + delta, 1);
   return monthKey(d);
 }
 export function daysInMonth(key: string) {
-  const [y, m] = key.split("-").map(Number);
+  const [y = 0, m = 1] = key.split("-").map(Number);
   return new Date(y, m, 0).getDate();
 }
 export function monthLabel(key: string, style: "long" | "short" = "long") {
-  const [y, m] = key.split("-").map(Number);
+  const [y = 0, m = 1] = key.split("-").map(Number);
   return new Date(y, m - 1, 1).toLocaleDateString("en-US", {
     month: style,
     year: "numeric",
@@ -83,7 +83,7 @@ export function lastMonths(n: number, from = currentMonthKey()): string[] {
   return Array.from({ length: n }, (_, i) => shiftMonth(from, -i));
 }
 export function formatDate(iso: string) {
-  const [y, m, d] = iso.split("-").map(Number);
+  const [y = 0, m = 1, d = 1] = iso.split("-").map(Number);
   return new Date(y, m - 1, d).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
