@@ -73,7 +73,7 @@ export function useProfile() {
       if (error) throw error;
       if (data) return data;
       const full_name =
-        (user.user_metadata?.full_name as string) || (user.user_metadata?.name as string) || user.email?.split("@")[0] || "";
+        (user.user_metadata?.['full_name'] as string) || (user.user_metadata?.['name'] as string) || user.email?.split("@")[0] || "";
       const { data: created, error: e2 } = await supabase
         .from("profiles")
         .upsert({ id: user.id, full_name, currency: "INR" })
@@ -96,7 +96,7 @@ export function useUpsert<T extends TableName>(table: T, label = "Saved") {
     mutationFn: async (row: Insert<T> & { id?: string }) => {
       const { id, ...rest } = row as Record<string, unknown>;
       if (id) {
-        const { error } = await supabase.from(table).update(rest as never).eq("id", id as string);
+        const { error } = await supabase.from(table).update(rest as never).eq("id" as never, id as never);
         if (error) throw error;
       } else {
         const { error } = await supabase.from(table).insert(rest as never);
@@ -116,7 +116,7 @@ export function useDelete<T extends TableName>(table: T, label = "Deleted") {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from(table).delete().eq("id", id);
+      const { error } = await supabase.from(table).delete().eq("id" as never, id as never);
       if (error) throw error;
     },
     onSuccess: () => {

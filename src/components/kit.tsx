@@ -67,7 +67,7 @@ export function PageHeader({ label, title, sub, actions }: { label: string; titl
   );
 }
 
-export function StatTile({ label, value, hint, tone, icon }: { label: string; value: ReactNode; hint?: ReactNode; tone?: "primary" | "accent"; icon?: string }) {
+export function StatTile({ label, value, hint, tone, icon }: { label: string; value: ReactNode; hint?: ReactNode; tone?: "primary" | "accent" | undefined; icon?: string | undefined }) {
   return (
     <div className="rounded-xl border bg-card p-4 shadow-card">
       <div className="flex items-center justify-between">
@@ -80,7 +80,7 @@ export function StatTile({ label, value, hint, tone, icon }: { label: string; va
   );
 }
 
-export function LoadingBlock({ rows = 3, className }: { rows?: number; className?: string }) {
+export function LoadingBlock({ rows = 3, className }: { rows?: number | undefined; className?: string | undefined }) {
   return (
     <div className={cn("space-y-3", className)} aria-busy>
       {Array.from({ length: rows }).map((_, i) => (
@@ -144,7 +144,7 @@ export function ConfirmDialog({
   open: boolean;
   onOpenChange: (o: boolean) => void;
   title: string;
-  body?: string;
+  body?: string | undefined;
   confirmLabel?: string;
   onConfirm: () => void;
 }) {
